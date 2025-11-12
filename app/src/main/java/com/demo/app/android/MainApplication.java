@@ -1,6 +1,6 @@
 package com.demo.app.android;
 
-import static com.demo.app.android.NimSDKOptionConfig.buildMixPushConfig;
+
 import static com.nim.pushlib.MixPushConfigGenerator.loadPushConfig;
 
 import android.app.Application;
@@ -45,7 +45,7 @@ public class MainApplication extends Application {
 //        sdkOptions.statusBarNotificationConfig = mixPushStatusBarConfig;
 //        sdkOptions.statusBarNotificationConfig = new StatusBarNotificationConfig();
 //        sdkOptions.mixPushConfig = loadPushConfig();
-        sdkOptions.mixPushConfig = buildMixPushConfig();
+//        sdkOptions.mixPushConfig = buildMixPushConfig();
         sdkOptions.disableAwake = true;
         NIMClient.init(this, null, sdkOptions);
         NIMClient.toggleNotification(false);
