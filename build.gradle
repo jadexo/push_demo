@@ -1,0 +1,28 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        maven {url 'https://developer.hihonor.com/repo'}
+        maven {url 'https://developer.huawei.com/repo/'}
+        maven{ url 'https://repos.vivo.com.cn/maven/repository/external-lib/'}
+    }
+    dependencies {
+        // 增加 asplugin 插件配置，推荐您使用最新版本。
+        classpath 'com.hihonor.mcs:asplugin:2.0.1.300'
+        // 增加 gradle 插件配置，根据 gradle 版本选择对应的插件版本号
+        classpath 'com.android.tools.build:gradle:8.1.+'
+        classpath 'com.huawei.agconnect:agcp:1.9.1.300'
+    }
+}
+
+plugins {
+    alias(libs.plugins.android.application) apply false
+    id 'com.android.library' version '7.2.0' apply false
+}
+
+apply from:"pushConfig.gradle"
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

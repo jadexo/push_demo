@@ -1,0 +1,140 @@
+ext {
+    // for test account
+    TEST_ACCOUNT = [
+        receiver_id: "",
+        receiver_token: "",
+        sender_id: "",
+        sender_token: ""
+    ]
+
+    //主项目使用到的IM版本 9.12.2  9.16.3  9.20.17
+    NIMVersion = "9.16.3"
+    //云信的appkey，对应清单文件中的com.netease.nim.appKey的值
+    APP_KEY = ""
+    APPLICATION_ID = ""
+
+    // for keystore info
+    MYAPP_UPLOAD_STORE_FILE = ""
+    MYAPP_UPLOAD_KEY_ALIAS = ""
+    MYAPP_UPLOAD_STORE_PASSWORD = ""
+    MYAPP_UPLOAD_KEY_PASSWORD = ""
+    /**
+     * PUSH SDK
+     */
+    //华为推送远端依赖
+    PUSH_SDK_HW = "com.huawei.hms:push:6.12.0.300"
+    //荣耀推送远端依赖
+    PUSH_SDK_HONOR = "com.hihonor.mcs:push:7.0.61.303"
+    //vivo
+    PUSH_SDK_VIVO = "vivo:vpush:4.1.0.0"
+    //小米推送库本地文件路径，替换pushLib/lib下的推送sdk后需要更改此处配置的文件名
+    PUSH_SDK_XM = "libs/MiPush_SDK_Client_6_0_1-C_3rd.aar"
+    //oppo推送库本地文件路径，替换pushLib/lib下的推送sdk后需要更改此处配置的文件名
+    PUSH_SDK_OPPO = "libs/com.heytap.msp_V3.7.1.aar"
+    //魅族推送远端依赖
+    PUSH_SDK_MZ = ""
+
+    /**
+     * FCM GOOGLE id: 8
+     */
+    fcmCertificateName = ""
+    fcmChannelId = ""
+    fcmHttpV1Enable = true
+
+    /**
+     * Honor 荣耀 id: 11
+     * 需要 mcs-services.json 文件
+     */
+    honorAppId = ""
+    honorCertificateName = ""
+    honorImportance = ""
+
+    /**
+     * Huawei 华为 id: 6
+     * 需要 agconnect-services.json 文件
+     */
+    hwAppId = ""
+    hwCertificateName = ""
+    hwCategory = ""
+    hwChannelId = ""
+
+    /**
+     * OPPO\Realme（真我）‌\OnePlus（一加） id: 10
+     */
+    oppoAppId = ""
+    oppoAppKey = ""
+    oppoAppSercet = ""
+    oppoCertificateName = ""
+    oppoChannelId = ""
+
+    /**
+     * vivo\iQOO（艾酷） id: 9
+     */
+    vivoCertificateName = ""
+    vivoAppKey = ""
+    vivoAppId = ""
+    vivoCategory = ""
+
+    /**
+     * xiaomi 小米 id: 5
+     */
+    xmAppId = ""
+    xmAppKey = ""
+    xmCertificateName = ""
+    xmChannelId = ""
+
+    /**
+     * Meizu 魅族 id: 7
+     */
+    mzAppId = ""
+    mzAppKey = ""
+    mzCertificateName = ""
+    mzChannelId = ""
+
+    /**
+     * 生成的payload是否包含APNS字段
+     */
+    apnsEnable = true
+}
+
+//添加标志位，保证只执行一次
+int count = 0
+gradle.afterProject {
+    gradle.getRootProject().getAllprojects().forEach {
+        println("afterProject:" + it.name)
+        if (it.plugins.hasPlugin("com.android.application") && count == 0) {
+            count = 1
+            it.dependencies {
+                implementation project(path: ':pushlib')
+            }
+            //根据主应用下的华为的agconnect-services.json文件配置决定是否要添加华为的plugin
+            def huaweiJsonPath = "${it.name}/agconnect-services.json"
+            println("huaweiJsonPath:" + huaweiJsonPath)
+            def huaweiJsonConfigFile = file(huaweiJsonPath)
+            if (huaweiJsonConfigFile.exists()) {
+                it.plugins.apply("com.huawei.agconnect")
+                println("add huawei plugin")
+            } else {
+                println("huawei json config file is not exists")
+            }
+
+            //根据主应用下的google的google-services.json文件配置决定是否要添加华为的plugin
+            def googleJsonConfigFile = file("${it.name}/google-services.json")
+            if (googleJsonConfigFile.exists()) {
+                it.plugins.apply("com.google.gms.google-services")
+                println("add google plugin")
+            } else {
+                println("google json config file is not exists")
+            }
+
+            //根据主应用下的google的google-services.json文件配置决定是否要添加华为的plugin
+            def honerJsonConfigFile = file("${it.name}/mcs-services.json")
+            if (honerJsonConfigFile.exists()) {
+                it.plugins.apply("com.hihonor.mcs.asplugin")
+                println("add honer plugin")
+            } else {
+                println("honer json config file is not exists")
+            }
+        }
+    }
+}

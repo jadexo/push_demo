@@ -1,0 +1,98 @@
+plugins {
+    id 'com.android.library'
+    id 'com.hihonor.mcs.asplugin'
+    id 'com.huawei.agconnect'
+}
+
+android {
+    namespace 'com.nim.pushlib'
+    compileSdk 32
+
+    buildFeatures {
+        buildConfig true
+    }
+    defaultConfig {
+        minSdk 21
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+                APP_KEY:rootProject.ext.APP_KEY,
+                honorAppId:rootProject.ext.honorAppId,
+                vivoAppKey:rootProject.ext.vivoAppKey,
+                vivoAppId:rootProject.ext.vivoAppId
+        ]
+        // for tester info Do not use in production environment
+        buildConfigField "String","receiver_id","\"${rootProject.ext.TEST_ACCOUNT.receiver_id}\""
+        buildConfigField "String","receiver_token","\"${rootProject.ext.TEST_ACCOUNT.receiver_token}\""
+        buildConfigField "String","sender_id","\"${rootProject.ext.TEST_ACCOUNT.sender_id}\""
+        buildConfigField "String","sender_token","\"${rootProject.ext.TEST_ACCOUNT.sender_token}\""
+
+        // PUSH CONFIG INFO
+        buildConfigField "String","APPLICATION_ID","\"${rootProject.ext.APPLICATION_ID}\""
+        // FCM
+        buildConfigField "String","fcmCertificateName","\"${rootProject.ext.fcmCertificateName}\""
+        buildConfigField "String","fcmChannelId","\"${rootProject.ext.fcmChannelId}\""
+        buildConfigField "boolean","fcmHttpV1Enable","${rootProject.ext.fcmHttpV1Enable}"
+        // xiaomi
+        buildConfigField "String","xmAppId","\"${rootProject.ext.xmAppId}\""
+        buildConfigField "String","xmAppKey","\"${rootProject.ext.xmAppKey}\""
+        buildConfigField "String","xmCertificateName","\"${rootProject.ext.xmCertificateName}\""
+        buildConfigField "String","xmChannelId","\"${rootProject.ext.xmChannelId}\""
+        // huawei
+        buildConfigField "String","hwAppId","\"${rootProject.ext.hwAppId}\""
+        buildConfigField "String","hwCertificateName","\"${rootProject.ext.hwCertificateName}\""
+        buildConfigField "String","hwChannelId","\"${rootProject.ext.hwChannelId}\""
+        buildConfigField "String","hwCategory","\"${rootProject.ext.hwCategory}\""
+        // honor
+        buildConfigField "String","honorCertificateName","\"${rootProject.ext.honorCertificateName}\""
+        buildConfigField "String","honorImportance","\"${rootProject.ext.honorImportance}\""
+        // vivo
+        buildConfigField "String","vivoCertificateName","\"${rootProject.ext.vivoCertificateName}\""
+        buildConfigField "String","vivoCategory","\"${rootProject.ext.vivoCategory}\""
+        // oppo
+        buildConfigField "String","oppoAppId","\"${rootProject.ext.oppoAppId}\""
+        buildConfigField "String","oppoAppKey","\"${rootProject.ext.oppoAppKey}\""
+        buildConfigField "String","oppoAppSercet","\"${rootProject.ext.oppoAppSercet}\""
+        buildConfigField "String","oppoCertificateName","\"${rootProject.ext.oppoCertificateName}\""
+        buildConfigField "String","oppoChannelId","\"${rootProject.ext.oppoChannelId}\""
+        // meizu
+        buildConfigField "String","mzAppId","\"${rootProject.ext.mzAppId}\""
+        buildConfigField "String","mzAppKey","\"${rootProject.ext.mzAppKey}\""
+        buildConfigField "String","mzCertificateName","\"${rootProject.ext.mzCertificateName}\""
+        buildConfigField "String","mzChannelId","\"${rootProject.ext.mzChannelId}\""
+        // apns
+        buildConfigField "boolean","apnsEnable","${rootProject.ext.apnsEnable}"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    api "com.netease.nimlib:basesdk:${NIMVersion}"
+    api "com.netease.nimlib:push:${NIMVersion}"
+    api "com.netease.nimlib:lucene:${NIMVersion}"
+
+    // PUSH SDK
+    api files(rootProject.ext.PUSH_SDK_XM); // Xiaomi
+    api files(rootProject.ext.PUSH_SDK_OPPO); // OPPO
+    api rootProject.ext.PUSH_SDK_VIVO // vivo
+    api rootProject.ext.PUSH_SDK_HONOR // Honor
+    api rootProject.ext.PUSH_SDK_HW // Huawei
+
+
+    //以下依赖都需要添加
+    implementation "androidx.sqlite:sqlite:2.1.0"
+    implementation 'com.alibaba:fastjson:1.2.57'
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'commons-codec:commons-codec:1.6'
+    implementation 'androidx.annotation:annotation:1.1.0'
+}

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MI_PUSH</string>
+    <string name="send_text">Send</string>
+    <string name="waiting_token">Waiting for token</string>
+</resources>

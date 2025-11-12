@@ -1,0 +1,30 @@
+pluginManagement {
+    repositories {
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url 'https://developer.hihonor.com/repo' }
+        maven { url 'https://developer.huawei.com/repo/' }
+        maven{ url 'https://repos.vivo.com.cn/maven/repository/external-lib/'}
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://developer.hihonor.com/repo' }
+        maven {url 'https://developer.huawei.com/repo/'}
+        maven{ url 'https://repos.vivo.com.cn/maven/repository/external-lib/'}
+    }
+}
+
+rootProject.name = "MI_PUSH"
+include ':app'
+include ':pushlib'
