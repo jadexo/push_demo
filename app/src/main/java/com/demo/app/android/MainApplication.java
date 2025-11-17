@@ -43,8 +43,8 @@ public class MainApplication extends Application {
 
         SDKOptions sdkOptions = new SDKOptions();
 //        sdkOptions.statusBarNotificationConfig = mixPushStatusBarConfig;
-//        sdkOptions.statusBarNotificationConfig = new StatusBarNotificationConfig();
-//        sdkOptions.mixPushConfig = loadPushConfig();
+        sdkOptions.statusBarNotificationConfig = new StatusBarNotificationConfig();
+        sdkOptions.mixPushConfig = loadPushConfig();
 //        sdkOptions.mixPushConfig = buildMixPushConfig();
         sdkOptions.disableAwake = true;
         NIMClient.init(this, null, sdkOptions);
