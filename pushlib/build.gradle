@@ -13,7 +13,7 @@ android {
     }
     defaultConfig {
         minSdk 21
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
                 APP_KEY:rootProject.ext.APP_KEY,
                 honorAppId:rootProject.ext.honorAppId,
