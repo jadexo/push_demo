@@ -13,8 +13,6 @@ import com.netease.nimlib.sdk.SDKOptions;
 
 import com.netease.nimlib.sdk.StatusBarNotificationConfig;
 import com.netease.nimlib.sdk.util.NIMUtil;
-import com.nim.pushlib.MixPushConfigGenerator;
-import com.nim.pushlib.MixPushStatusBarConfig;
 
 public class MainApplication extends Application {
     private static final String TAG = "MYPUSH";
@@ -36,16 +34,9 @@ public class MainApplication extends Application {
         instance = this;
         Log.i(TAG,"run Application");
 
-        // SDK 初始化（启动后台服务，若已经存在用户登录信息，SDK 将进行自动登录）。不能对初始化语句添加进程判断逻辑。
-//        StatusBarNotificationConfig mixPushStatusBarConfig = new MixPushStatusBarConfig.Builder()
-//                .setShowBadge(true)
-//                .build();
-
         SDKOptions sdkOptions = new SDKOptions();
-//        sdkOptions.statusBarNotificationConfig = mixPushStatusBarConfig;
         sdkOptions.statusBarNotificationConfig = new StatusBarNotificationConfig();
         sdkOptions.mixPushConfig = loadPushConfig();
-//        sdkOptions.mixPushConfig = buildMixPushConfig();
         sdkOptions.disableAwake = true;
         NIMClient.init(this, null, sdkOptions);
         NIMClient.toggleNotification(false);
